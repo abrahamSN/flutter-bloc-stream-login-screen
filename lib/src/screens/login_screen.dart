@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
         children: <Widget>[
           emailField(bloc),
           passField(bloc),
-          loginBtn(),
+          loginBtn(bloc),
         ],
       ),
     );
@@ -54,12 +54,17 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget loginBtn() {
-    return RaisedButton(
-      textColor: Colors.white,
-      child: Text('login'),
-      color: Colors.blue,
-      onPressed: () {},
+  Widget loginBtn(Bloc bloc) {
+    return StreamBuilder(
+      stream: bloc.btn,
+      builder: (context, snapshot) {
+        return RaisedButton(
+          textColor: Colors.white,
+          child: Text('login'),
+          color: Colors.blue,
+          onPressed: snapshot.hasData ? bloc.submit : null,
+        );
+      },
     );
   }
 }
